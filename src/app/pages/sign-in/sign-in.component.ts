@@ -1,5 +1,15 @@
-import { Component, inject } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  ViewEncapsulation,
+} from '@angular/core';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { AuthModel } from '../../core/models/auth.model';
 import { Router } from '@angular/router';
@@ -9,16 +19,15 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [ReactiveFormsModule],
   templateUrl: './sign-in.component.html',
-  styleUrl: './sign-in.component.scss'
+  styleUrl: './sign-in.component.scss',
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SignInComponent {
   private _authService = inject(AuthService);
   loginForm!: FormGroup;
 
-  constructor(
-    private _builder: FormBuilder,
-    private _router: Router
-  ) {}
+  constructor(private _builder: FormBuilder, private _router: Router) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -34,12 +43,10 @@ export class SignInComponent {
   proceedLogin() {
     const model: AuthModel = {
       email: this.loginForm.value.email,
-      password: this.loginForm.value.password
-    }
-    this._authService.authorize(model).subscribe(
-      (response) => {
-        this._router.navigate(['/dashboard']);
-      }
-    )
+      password: this.loginForm.value.password,
+    };
+    this._authService.authorize(model).subscribe((response) => {
+      this._router.navigate(['/dashboard']);
+    });
   }
 }

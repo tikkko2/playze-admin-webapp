@@ -10,10 +10,14 @@ export class AuthService {
   public accessToken = signal<string>('');
   public refreshToken = signal<string>('');
   public roles = signal<string[]>([]);
+  public fullName = signal<string>('');
+  public email = signal<string>('');
 
   public readonly localStorageAccessTokenName = 'accessToken';
   public readonly localStorageRolesName = 'roles';
   public readonly localStorageRefreshTokenName = 'refreshToken';
+  public readonly localStorageFullName = 'fullname';
+  public readonly localStorageEmail = 'email';
 
   public isAuthenticated = computed(() => this.accessToken()?.length > 0);
 
@@ -38,10 +42,14 @@ export class AuthService {
     localStorage.removeItem(this.localStorageAccessTokenName);
     localStorage.removeItem(this.localStorageRolesName);
     localStorage.removeItem(this.localStorageRefreshTokenName);
+    localStorage.removeItem(this.localStorageFullName);
+    localStorage.removeItem(this.localStorageEmail);
 
     this.accessToken.set('');
     this.roles.set([]);
     this.refreshToken.set('');
+    this.fullName.set('');
+    this.email.set('');
 
     return of(true);
   }
@@ -76,7 +84,14 @@ export class AuthService {
       this.localStorageRolesName,
       JSON.stringify(model.roles)
     );
+
     this.roles.set(model.roles);
+
+    localStorage.setItem(this.localStorageFullName, model.fullName);
+    this.fullName.set(model.fullName);
+
+    localStorage.setItem(this.localStorageEmail, model.email);
+    this.email.set(model.email);
   }
 
   private initSignals() {
@@ -97,6 +112,16 @@ export class AuthService {
     const localRoles = localStorage.getItem(this.localStorageRolesName);
     if (localRoles) {
       this.roles.set(JSON.parse(localRoles));
+    }
+
+    const fullName = localStorage.getItem(this.localStorageFullName);
+    if (fullName) {
+      this.fullName.set(fullName);
+    }
+
+    const email = localStorage.getItem(this.localStorageEmail);
+    if (email) {
+      this.email.set(email);
     }
   }
 }
