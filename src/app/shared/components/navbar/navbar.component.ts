@@ -1,5 +1,9 @@
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, HostListener } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  HostListener,
+  ViewEncapsulation,
+} from '@angular/core';
 import { AuthService } from '../../../core/services/auth.service';
 import { Router } from '@angular/router';
 
@@ -9,18 +13,17 @@ import { Router } from '@angular/router';
   imports: [],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss',
+  encapsulation: ViewEncapsulation.None,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavbarComponent {
   isDropdownOpen = false;
 
-  constructor(
-    private _authService: AuthService,
-    private _router: Router
-  ) {}
+  constructor(public _authService: AuthService, private _router: Router) {}
 
   logout() {
     this._authService.signOut();
-    this._router.navigate(['/sign-in'])
+    this._router.navigate(['/sign-in']);
   }
 
   toggleDropdown() {
@@ -33,7 +36,10 @@ export class NavbarComponent {
     const dropdownMenu = document.getElementById('user-dropdown');
 
     if (dropdownButton && dropdownMenu) {
-      if (!dropdownButton.contains(event.target as Node) && !dropdownMenu.contains(event.target as Node)) {
+      if (
+        !dropdownButton.contains(event.target as Node) &&
+        !dropdownMenu.contains(event.target as Node)
+      ) {
         this.isDropdownOpen = false;
       }
     }
