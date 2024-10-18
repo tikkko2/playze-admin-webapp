@@ -1,8 +1,7 @@
 import { computed, Injectable, signal } from '@angular/core';
-import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
 import { AuthModel } from '../models/auth.model';
 import { Observable, of, tap, throwError } from 'rxjs';
+import { HttpService } from './http.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,9 +17,9 @@ export class AuthService {
 
   public isAuthenticated = computed(() => this.accessToken()?.length > 0);
 
-  private readonly _apiUrl = `${environment.apiUrl}/auth`;
+  private readonly _apiUrl = `/auth`;
 
-  constructor(private readonly _http: HttpClient) {
+  constructor(private readonly _http: HttpService) {
     this.initSignals();
   }
 
@@ -77,7 +76,7 @@ export class AuthService {
       this.localStorageRolesName,
       JSON.stringify(model.roles)
     );
-    this.roles.set(JSON.parse(model.roles));
+    this.roles.set(model.roles);
   }
 
   private initSignals() {
