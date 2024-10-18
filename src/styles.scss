@@ -4,11 +4,27 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
 
+* {
+  font-family: "Jura", sans-serif !important;
+}
+
 body, html {
-  font-family: "Jura", sans-serif;
   font-optical-sizing: auto;
   background-image: url('./assets/img/homePage.svg');
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+.mb-no {
+  margin-bottom: 0 !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #c9ff58;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+}

@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { AuthModel } from '../../core/models/auth.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -16,6 +17,7 @@ export class SignInComponent {
 
   constructor(
     private _builder: FormBuilder,
+    private _router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class SignInComponent {
     }
     this._authService.authorize(model).subscribe(
       (response) => {
-        console.log(response);
+        this._router.navigate(['/dashboard']);
       }
     )
   }
