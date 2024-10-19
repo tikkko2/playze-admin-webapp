@@ -1,3 +1,15 @@
 .sidebar-component {
   background-image: url("../../../../assets/img/side-nav.svg");
 }
+
+::-webkit-scrollbar-thumb {
+  background-color: #c9ff58;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 10px;
+  overflow: hidden;
+}
