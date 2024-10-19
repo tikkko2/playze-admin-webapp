@@ -8,6 +8,7 @@ import {
   NavigationModel,
   NavigationService,
 } from '../../../core/services/navigation.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
@@ -22,9 +23,17 @@ export class SidebarComponent {
   public navigation$ = this.navigationService.navigation;
   public selectedItem$ = this.navigationService.selectedItem;
 
-  constructor(private navigationService: NavigationService) {}
+  constructor(
+    private navigationService: NavigationService,
+    private router: Router
+  ) {}
 
-  onSelectItem(item: NavigationModel) {
+  onSelectItem(item: NavigationModel, event: Event) {
+    event.stopPropagation();
     this.navigationService.selectItem(item);
+
+    if (item.navigate) {
+      this.router.navigate([item.navigate]);
+    }
   }
 }

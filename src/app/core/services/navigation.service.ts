@@ -15,58 +15,29 @@ export interface NavigationModel {
 export class NavigationService {
   private _navigation = signal<NavigationModel[]>([
     {
+      icon: 'dashboard-icon',
+      name: 'Dashboard',
+      navigate: '',
+      selected: true,
+      children: [],
+    },
+    {
       icon: 'news-icon',
       name: 'News',
       navigate: '',
       selected: false,
       children: [
         {
-          icon: 'product',
-          name: 'Products',
+          icon: '',
+          name: 'Announcements',
           navigate: '/products',
           selected: false,
           children: [],
         },
         {
-          icon: 'billing',
-          name: 'Billing',
+          icon: '',
+          name: 'Types',
           navigate: '/billing',
-          selected: false,
-          children: [],
-        },
-        {
-          icon: 'invoice',
-          name: 'Invoice',
-          navigate: '/invoice',
-          selected: false,
-          children: [],
-        },
-      ],
-    },
-    {
-      icon: 'news-icon',
-      name: 'News 2',
-      navigate: '',
-      selected: false,
-      children: [
-        {
-          icon: 'product',
-          name: 'Products 2',
-          navigate: '/products',
-          selected: false,
-          children: [],
-        },
-        {
-          icon: 'billing',
-          name: 'Billing 2',
-          navigate: '/billing',
-          selected: false,
-          children: [],
-        },
-        {
-          icon: 'invoice',
-          name: 'Invoice 2',
-          navigate: '/invoice',
           selected: false,
           children: [],
         },
@@ -76,7 +47,7 @@ export class NavigationService {
 
   public readonly navigation = this._navigation.asReadonly();
 
-  private _selectedItem = signal<NavigationModel | null>(null);
+  private _selectedItem = signal<NavigationModel | null>(this._navigation()[0]);
 
   public selectedItem: Signal<NavigationModel | null> = computed(() =>
     this._selectedItem()
@@ -84,21 +55,31 @@ export class NavigationService {
 
   selectItem(item: NavigationModel) {
     if (!item.children.length) {
-      // Child item clicked
       const parent = this.findParent(this._navigation(), item);
       if (parent) {
-        this.resetSelection(parent.children); // Reset all child selections in the same parent
-        parent.hasSelectedChild = true; // Ensure parent stays open
+        this._navigation().forEach((navItem) => {
+          if (navItem !== parent) {
+            navItem.selected = false;
+          }
+        });
+
+        this.resetSelection(parent.children);
+        parent.hasSelectedChild = true;
       }
-      item.selected = true; // Keep the child highlighted
+      item.selected = true;
+      this._selectedItem.set(item);
+
+      this._navigation().forEach((navItem) => {
+        if (navItem !== parent) {
+          navItem.hasSelectedChild = false;
+          this.resetSelection(navItem.children);
+        }
+      });
     } else {
-      // Parent item clicked
-      this.resetSelection(this._navigation()); // Reset the entire navigation
-      item.selected = !item.selected; // Toggle parent open/close
-      item.hasSelectedChild = item.selected; // Keep track if a child is selected
+      item.selected = !item.selected;
     }
 
-    this._navigation.set(this._navigation()); // Trigger navigation state change
+    this._navigation.set(this._navigation());
   }
 
   private findParent(
