@@ -13,11 +13,12 @@ import {
 import { AuthService } from '../../core/services/auth.service';
 import { AuthModel } from '../../core/models/auth.model';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-sign-in',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.scss',
   encapsulation: ViewEncapsulation.None,
@@ -26,6 +27,7 @@ import { Router } from '@angular/router';
 export class SignInComponent {
   private _authService = inject(AuthService);
   loginForm!: FormGroup;
+  isLoading: boolean = false;
 
   constructor(private _builder: FormBuilder, private _router: Router) {}
 
@@ -41,12 +43,20 @@ export class SignInComponent {
   }
 
   proceedLogin() {
+    this.isLoading = !this.isLoading;
     const model: AuthModel = {
       email: this.loginForm.value.email,
       password: this.loginForm.value.password,
     };
-    this._authService.authorize(model).subscribe((response) => {
-      this._router.navigate(['/dashboard']);
-    });
+    this._authService.authorize(model).subscribe(
+      (response) => {
+        this._router.navigate(['/dashboard']);
+        this.isLoading = !this.isLoading;
+      },
+      (error) => {
+        this.loginForm.reset();
+        this.isLoading = !this.isLoading;
+      }
+    );
   }
 }
