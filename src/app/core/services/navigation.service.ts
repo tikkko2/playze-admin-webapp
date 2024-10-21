@@ -1,4 +1,6 @@
 import { Injectable, signal, computed, Signal } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 
 export interface NavigationModel {
   icon: string;
@@ -17,7 +19,7 @@ export class NavigationService {
     {
       icon: 'dashboard-icon',
       name: 'Dashboard',
-      navigate: '',
+      navigate: '/dashboard/user',
       selected: true,
       children: [],
     },
@@ -30,14 +32,14 @@ export class NavigationService {
         {
           icon: '',
           name: 'Announcements',
-          navigate: '/products',
+          navigate: '/dashboard/announcement',
           selected: false,
           children: [],
         },
         {
           icon: '',
           name: 'Types',
-          navigate: '/billing',
+          navigate: '/dashboard/types',
           selected: false,
           children: [],
         },
@@ -53,33 +55,74 @@ export class NavigationService {
     this._selectedItem()
   );
 
-  selectItem(item: NavigationModel) {
-    if (!item.children.length) {
-      const parent = this.findParent(this._navigation(), item);
-      if (parent) {
-        this._navigation().forEach((navItem) => {
-          if (navItem !== parent) {
-            navItem.selected = false;
-          }
-        });
+  constructor(private router: Router) {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        this.updateSelectionBasedOnRoute();
+      });
 
+    this.updateSelectionBasedOnRoute();
+  }
+
+  private updateSelectionBasedOnRoute() {
+    const currentRoute = this.router.url;
+
+    this._navigation().forEach((navItem) => {
+      navItem.selected = false;
+      navItem.hasSelectedChild = false;
+      this.resetSelection(navItem.children);
+    });
+
+    this._navigation().forEach((navItem) => {
+      if (navItem.navigate === currentRoute) {
+        navItem.selected = true;
+        this._selectedItem.set(navItem);
+      } else if (navItem.children.length > 0) {
+        const selectedChild = navItem.children.find(
+          (child) => child.navigate === currentRoute
+        );
+        if (selectedChild) {
+          navItem.selected = true;
+          navItem.hasSelectedChild = true;
+          selectedChild.selected = true;
+          this._selectedItem.set(selectedChild);
+        }
+      }
+    });
+    this._navigation.set(this._navigation());
+  }
+
+  selectItem(item: NavigationModel) {
+    if (item.children.length === 0) {
+      const parent = this.findParent(this._navigation(), item);
+      this._navigation().forEach((navItem) => {
+        if (navItem !== parent) {
+          navItem.selected = false;
+          navItem.hasSelectedChild = false;
+          this.resetSelection(navItem.children);
+        }
+      });
+      if (parent) {
         this.resetSelection(parent.children);
         parent.hasSelectedChild = true;
       }
       item.selected = true;
       this._selectedItem.set(item);
-
+    } else {
       this._navigation().forEach((navItem) => {
-        if (navItem !== parent) {
+        if (navItem !== item) {
+          navItem.selected = false;
           navItem.hasSelectedChild = false;
           this.resetSelection(navItem.children);
         }
       });
-    } else {
       item.selected = !item.selected;
     }
-
     this._navigation.set(this._navigation());
+    if (item.navigate) {
+      this.router.navigate([item.navigate]);
+    }
   }
 
   private findParent(
