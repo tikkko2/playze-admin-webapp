@@ -1,4 +1,4 @@
 export interface KeyValuePairModel{
-  key: string,
+  id: string,
   name: string
 }

@@ -73,7 +73,6 @@ export class AuthInterceptor implements HttpInterceptor {
 
       return this._authService.refreshAccessToken().pipe(
         switchMap((response: any) => {
-          debugger;
           this.isRefreshing = false;
           const newToken = response.parameters.auth.accessToken;
           const newRefreshToken = response.parameters.auth.refreshToken;
@@ -109,10 +108,8 @@ export class AuthInterceptor implements HttpInterceptor {
         }),
         catchError((err) => {
           this.isRefreshing = false;
-          if (err.status === 401) {
-            this._authService.signOut();
-            this.router.navigateByUrl('sign-in');
-          }
+          this._authService.signOut();
+          this.router.navigateByUrl('sign-in');
           return throwError(() => err);
         }),
         finalize(() => {
