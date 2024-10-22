@@ -39,7 +39,7 @@ export class NavigationService {
         {
           icon: '',
           name: 'Types',
-          navigate: '/dashboard/types',
+          navigate: '/dashboard/news-types',
           selected: false,
           children: [],
         },

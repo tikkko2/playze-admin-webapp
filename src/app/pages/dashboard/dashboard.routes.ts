@@ -14,10 +14,10 @@ export const DASHBOARD_ROUTES: Routes = [
           ),
       },
       {
-        path: 'types',
+        path: 'news-types',
         loadComponent: () =>
-          import('../types/types.component').then(
-            (m) => m.TypesComponent
+          import('../news-types/news-types.component').then(
+            (m) => m.NewsTypesComponent
           ),
       },
       {

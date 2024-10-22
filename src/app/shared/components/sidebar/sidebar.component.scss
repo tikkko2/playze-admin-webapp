@@ -1,5 +1,7 @@
 .sidebar-component {
   background-image: url("../../../../assets/img/side-nav.svg");
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 ::-webkit-scrollbar-thumb {

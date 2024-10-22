@@ -1,5 +1,6 @@
 import {
   ChangeDetectionStrategy,
+  ChangeDetectorRef,
   Component,
   inject,
   ViewEncapsulation,
@@ -26,6 +27,7 @@ import { CommonModule } from '@angular/common';
 })
 export class SignInComponent {
   private _authService = inject(AuthService);
+  private cdr = inject(ChangeDetectorRef);
   loginForm!: FormGroup;
   isLoading: boolean = false;
 
@@ -54,8 +56,9 @@ export class SignInComponent {
         this.isLoading = !this.isLoading;
       },
       (error) => {
-        this.loginForm.reset();
         this.isLoading = !this.isLoading;
+        this.cdr.markForCheck();
+        this.loginForm.reset();
       }
     );
   }

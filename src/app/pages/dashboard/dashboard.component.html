@@ -7,6 +7,7 @@
       <app-sidebar></app-sidebar>
     </div>
     <div class="grow">
+      <h2>{{this.sidebarService.selectedItem()?.name}}</h2>
       <router-outlet></router-outlet>
     </div>
   </div>
