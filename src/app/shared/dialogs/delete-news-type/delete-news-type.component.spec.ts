@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NewsComponent } from './news.component';
+import { DeleteNewsTypeComponent } from './delete-news-type.component';
 
-describe('NewsComponent', () => {
-  let component: NewsComponent;
-  let fixture: ComponentFixture<NewsComponent>;
+describe('DeleteNewsTypeComponent', () => {
+  let component: DeleteNewsTypeComponent;
+  let fixture: ComponentFixture<DeleteNewsTypeComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NewsComponent]
+      imports: [DeleteNewsTypeComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(NewsComponent);
+    fixture = TestBed.createComponent(DeleteNewsTypeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
