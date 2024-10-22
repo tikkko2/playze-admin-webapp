@@ -8,19 +8,20 @@ import { KeyValuePairModel } from '../../shared/models/key-value-pair.model';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './news-types.component.html',
-  styleUrl: './news-types.component.scss'
+  styleUrl: './news-types.component.scss',
 })
 export class NewsTypesComponent implements OnInit {
   public newsTypesService = inject(NewsTypesService);
-  filterText: string = ''
+  filterText: string = '';
 
   ngOnInit() {
+    this.initTypes();
   }
 
-  initTypes(){
-    this.newsTypesService.getNewsTypes(this.filterText).subscribe((result) =>{
+  initTypes() {
+    this.newsTypesService.getNewsTypes(this.filterText).subscribe((result) => {
       const types = result.parameters[result.key] as KeyValuePairModel[];
-      this.newsTypesService.newsTypes.set(types)
+      this.newsTypesService.newsTypes.set(types);
     });
   }
 }
