@@ -1,7 +1,8 @@
 <aside
   id="sidebar-multi-level-sidebar"
-  class="fixed top-[68px] bottom-10 left-10 z-40 w-64 transition-transform transform sidebar-component"
+  class="fixed top-[68px] bottom-10 left-10 z-40 w-64 transition-transform transform sidebar-component bg-[#121212]"
   aria-label="Sidebar"
+  [@sidebarState]="isOpen ? 'open' : 'closed'"
 >
   <div class="h-full px-3 py-8 overflow-y-auto">
     <ul class="space-y-2 font-medium">

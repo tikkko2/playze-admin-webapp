@@ -1,3 +1,10 @@
-<div class="dash-component bg-[#292929] p-8 border border-[#caff5881] rounded">
-  <p>announcement works!</p>
+<div class="dash-component bg-[#252525] p-8 border border-[#caff5881] rounded">
+  <div>
+    <p>announcement works!</p>
+    <app-pagination
+      (pageChange)="onPageChange($event)"
+      [currentPage]="currentPage"
+      [totalPages]="totalPages"
+    ></app-pagination>
+  </div>
 </div>
