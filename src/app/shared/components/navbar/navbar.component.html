@@ -2,6 +2,14 @@
   <div class="flex flex-wrap items-center justify-between mx-10">
     <div class="flex items-center space-x-3 rtl:space-x-reverse">
       <img
+        src="../../../../assets/svg/sidebar-right.svg"
+        alt="toggle"
+        class="cursor-pointer"
+        (click)="onToggleClick()"
+        [ngClass]="{ 'rotate-180': isOpen }"
+        [@rotateIcon]="isOpen ? 'open' : 'closed'"
+      />
+      <img
         src="../../../../assets/img/playze.svg"
         class="h-100"
         alt="Playze Logo"

@@ -1,13 +1,16 @@
 <div>
   <div class="nav-class">
-    <app-navbar></app-navbar>
+    <app-navbar
+      [isOpen]="isOpen"
+      (toggleSidebar)="toggleSidebar()"
+    ></app-navbar>
   </div>
-  <div class="mx-10 flex text-white">
-    <div class="min-w-72 shrink">
-      <app-sidebar></app-sidebar>
+  <div class="mx-10 flex text-white" [ngClass]="{ 'sidebar-open': isOpen }">
+    <div class="">
+      <app-sidebar [isOpen]="isOpen"></app-sidebar>
     </div>
-    <div class="grow">
-      <h2>{{this.sidebarService.selectedItem()?.name}}</h2>
+    <div class="main-component grow">
+      <h2>{{ this.sidebarService.selectedItem()?.name }}</h2>
       <router-outlet></router-outlet>
     </div>
   </div>
