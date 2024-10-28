@@ -1,6 +1,112 @@
-<div class="dash-component bg-[#252525] p-8 border border-[#caff5881] rounded">
-  <div>
-    <p>announcement works!</p>
+<div class="dash-component bg-[#121212] p-8 border border-[#caff5881] rounded">
+  <div class="flex justify-between items-center mb-8">
+    <div class="relative w-full max-w-80">
+      <div
+        class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none"
+      >
+        <svg
+          class="w-4 h-4 text-gray-500 dark:text-gray-400"
+          aria-hidden="true"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 20 20"
+        >
+          <path
+            stroke="currentColor"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"
+          />
+        </svg>
+      </div>
+      <input
+        type="text"
+        id="type-search"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
+        placeholder="Search type"
+        required
+      />
+    </div>
+    <div>
+      <button
+        class="text-gray-900 bg-gradient-to-r from-lime-200 via-[#c9ff58] to-[#9fcc3c] hover:bg-gradient-to-br focus:outline-none rounded-lg px-3 py-2.5 text-center"
+      >
+        <svg
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+          <g
+            id="SVGRepo_tracerCarrier"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          ></g>
+          <g id="SVGRepo_iconCarrier">
+            <path
+              d="M4 12H20M12 4V20"
+              stroke="#1b1b1b"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            ></path>
+          </g>
+        </svg>
+      </button>
+    </div>
+  </div>
+  <div class="max-w-[1000px] mx-auto">
+    <app-news-card
+      imageUrl="https://imageio.forbes.com/specials-images/imageserve/65166fdaa6a52a71706371d4/Game-On--The-Top-10-Video-Game-Trends-In-2024/960x0.jpg?height=399&width=711&fit=bounds"
+      title="Free games to play this weekend (23-24 March) - a comprehensive round-up Humble the best of boomer shooters Game bundle is here!"
+      subtitle="Humble the best of boomer shooters Game bundle is here!"
+      timeAgo="4h ago"
+      category="Bundles"
+      [platforms]="[
+        '../../../assets/svg/fa_windows.svg',
+        '../../../assets/svg/fa-brands_playstation.svg'
+      ]"
+    >
+    </app-news-card>
+    <app-news-card
+      imageUrl="https://imageio.forbes.com/specials-images/imageserve/65166fdaa6a52a71706371d4/Game-On--The-Top-10-Video-Game-Trends-In-2024/960x0.jpg?height=399&width=711&fit=bounds"
+      title="Free games to play this weekend (23-24 March) - a comprehensive round-up Humble the best of boomer shooters Game bundle is here!"
+      subtitle="Humble the best of boomer shooters Game bundle is here!"
+      timeAgo="4h ago"
+      category="Bundles"
+      [platforms]="[
+        '../../../assets/svg/fa_windows.svg',
+        '../../../assets/svg/fa-brands_playstation.svg'
+      ]"
+    >
+    </app-news-card>
+    <app-news-card
+      imageUrl="https://imageio.forbes.com/specials-images/imageserve/65166fdaa6a52a71706371d4/Game-On--The-Top-10-Video-Game-Trends-In-2024/960x0.jpg?height=399&width=711&fit=bounds"
+      title="Free games to play this weekend (23-24 March) - a comprehensive round-up Humble the best of boomer shooters Game bundle is here!"
+      subtitle="Humble the best of boomer shooters Game bundle is here!"
+      timeAgo="4h ago"
+      category="Bundles"
+      [platforms]="[
+        '../../../assets/svg/fa_windows.svg',
+        '../../../assets/svg/fa-brands_playstation.svg'
+      ]"
+    >
+    </app-news-card>
+    <app-news-card
+      imageUrl="https://imageio.forbes.com/specials-images/imageserve/65166fdaa6a52a71706371d4/Game-On--The-Top-10-Video-Game-Trends-In-2024/960x0.jpg?height=399&width=711&fit=bounds"
+      title="Free games to play this weekend (23-24 March) - a comprehensive round-up Humble the best of boomer shooters Game bundle is here!"
+      subtitle="Humble the best of boomer shooters Game bundle is here!"
+      timeAgo="4h ago"
+      category="Bundles"
+      [platforms]="[
+        '../../../assets/svg/fa_windows.svg',
+        '../../../assets/svg/fa-brands_playstation.svg'
+      ]"
+    >
+    </app-news-card>
     <app-pagination
       (pageChange)="onPageChange($event)"
       [currentPage]="currentPage"

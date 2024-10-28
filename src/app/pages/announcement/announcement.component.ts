@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
+import { NewsCardComponent } from '../../shared/news-card/news-card.component';
 
 @Component({
   selector: 'app-announcement',
   standalone: true,
-  imports: [PaginationComponent],
+  imports: [PaginationComponent, NewsCardComponent],
   templateUrl: './announcement.component.html',
   styleUrl: './announcement.component.scss'
 })
