@@ -10,7 +10,7 @@
       <app-sidebar [isOpen]="isOpen"></app-sidebar>
     </div>
     <div class="main-component grow">
-      <h2>{{ this.sidebarService.selectedItem()?.name }}</h2>
+      <h2 class="mb-6">{{ this.sidebarService.selectedItem()?.name }}</h2>
       <router-outlet></router-outlet>
     </div>
   </div>
