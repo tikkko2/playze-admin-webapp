@@ -93,6 +93,7 @@ export class AuthInterceptor implements HttpInterceptor {
             this.refreshTokenSubject.next(newToken);
 
             return from(this.cachedRequests).pipe(
+              take(1),
               concatMap((req) =>
                 next.handle(this.addTokenHeader(req, newToken))
               ),

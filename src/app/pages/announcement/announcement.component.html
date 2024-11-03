@@ -30,9 +30,11 @@
     </div>
     <div>
       <button
-        class="text-gray-900 bg-gradient-to-r from-lime-200 via-[#c9ff58] to-[#9fcc3c] hover:bg-gradient-to-br focus:outline-none rounded-lg px-3 py-2.5 text-center"
+        (click)="addNewsDialog()"
+        class="text-gray-900 bg-gradient-to-r from-lime-200 via-[#c9ff58] to-[#9fcc3c] hover:bg-gradient-to-br focus:outline-none rounded-lg p-3 text-center"
       >
         <svg
+          class="hover:-rotate-90 transition-all"
           width="20"
           height="20"
           viewBox="0 0 24 24"
