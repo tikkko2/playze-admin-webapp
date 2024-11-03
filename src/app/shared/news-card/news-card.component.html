@@ -1,34 +1,27 @@
-<!-- gaming-news-card.component.html -->
-<div class="news-card relative max-w-[1000px] mb-5 bg-[#1a1a1a] text-white cursor-pointer border border-[#4a503b] hover:border-[#97ff10]">
-  <div class="card-content flex p-3 gap-3 relative z-10">
-    <!-- Image Section -->
-    <div class="image-container relative h-40 overflow-hidden">
-      <img [ngSrc]="imageUrl" width="280" height="160" alt="Game preview" class="w-full h-full object-cover">
+<div class="news-card">
+  <div class="card-content">
+    <div class="image-container">
+      <img [ngSrc]="imageUrl" width="280" height="160" alt="Game preview" />
     </div>
 
-    <!-- Content Section -->
-    <div class="content flex flex-col">
-      <!-- Meta Information -->
-      <div class="meta flex items-center gap-5 mb-4">
-        <span class="timestamp text-[#9ca3af] text-sm">Added: {{timeAgo}}</span>
-        <span class="news-category news-category-freebies">{{category}}</span>
+    <div class="content">
+      <div class="meta">
+        <span class="timestamp">Added: {{ timeAgo }}</span>
+        <span class="news-category news-category-freebies">{{ category }}</span>
 
-        <!-- Platforms -->
-        <div class="platforms flex gap-2 m-0">
-          <span class="platform flex" *ngFor="let platform of platforms">
+        <!-- <div class="platforms">
+          <span class="platform" *ngFor="let platform of platforms">
             <img [src]="platform" alt="plt">
           </span>
-        </div>
+        </div> -->
       </div>
 
-      <!-- Title & Subtitle -->
-      <h2 class="title text-[16px] font-[800] line-clamp-2 mb-4">{{title}}</h2>
-      <p class="subtitle text-[#9ca3af] line-clamp-1">{{subtitle}}</p>
+      <h2 class="title">{{ title }}</h2>
+      <p class="subtitle">{{ subtitle }}</p>
 
-      <!-- Read More -->
-      <div class="read-more flex items-center justify-end gap-2 me-1">
-        <p class="m-0 p-0">Read more</p>
-        <img src="../../../assets/svg/chevron-right.svg" alt="">
+      <div class="read-more">
+        <p>Read more</p>
+        <img src="../../../assets/svg/chevron-right.svg" alt="" />
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { AuthInterceptor } from './core/interceptors/auth.interceptor';
+import { TINYMCE_SCRIPT_SRC } from '@tinymce/tinymce-angular';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -17,5 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     { provide: MatSnackBarModule },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
   ],
 };
