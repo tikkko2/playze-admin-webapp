@@ -12,4 +12,8 @@ export class AnnouncementService {
   getGames(name: string) {
     return this._httpService.get(`/games/dropdown?Ammount=${this._gamesQuantity}&Name=${name}`);
   }
+
+  uploadNews(data: any) {
+    return this._httpService.post(`/announcements`, data);
+  }
 }

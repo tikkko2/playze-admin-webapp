@@ -3,6 +3,7 @@ import { PaginationComponent } from '../../shared/pagination/pagination.componen
 import { NewsCardComponent } from '../../shared/news-card/news-card.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddNewsAnnComponent } from '../../shared/dialogs/add-news-ann/add-news-ann.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-announcement',
@@ -16,7 +17,8 @@ export class AnnouncementComponent {
   currentPage = 1;
 
   constructor(
-    private _dialog: MatDialog
+    private _dialog: MatDialog,
+    private _router: Router,
   ) {}
 
   onPageChange(newPage: number) {
@@ -26,5 +28,9 @@ export class AnnouncementComponent {
 
   addNewsDialog() {
     this._dialog.open(AddNewsAnnComponent);
+  }
+
+  goToNewsDetail(id: number) {
+    this._router.navigate(['/dashboard/announcement', id]);  // Navigate to the detail page with the ID
   }
 }

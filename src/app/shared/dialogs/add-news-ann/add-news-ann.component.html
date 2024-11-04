@@ -57,7 +57,7 @@
         >Related games</label
       >
       <div
-        class="flex flex-wrap gap-2 max-w-[700px] select-none"
+        class="flex flex-wrap gap-2 max-w-[900px] select-none"
         [ngClass]="selectedGames.length > 0 ? 'my-2' : ''"
       >
         <span
@@ -159,14 +159,15 @@
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >Content</label
       >
-      <app-pl-editor></app-pl-editor>
+      <app-pl-editor ngDefaultControl formControlName="contentHtml" [content]="editorContent"
+      (contentChange)="onEditorContentChange($event)"></app-pl-editor>
     </div>
 
     <div>
       <label
         class="block my-4 border border-dashed border-gray-400 hover:bg-gray-800 rounded-2xl py-4 text-center w-full text-sm font-medium text-gray-900 dark:text-white cursor-pointer"
         for="file_input"
-        >Upload file</label
+        >Upload a photo</label
       >
       <input
         class="hidden"

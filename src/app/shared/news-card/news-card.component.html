@@ -1,4 +1,4 @@
-<div class="news-card">
+<div class="news-card relative">
   <div class="card-content">
     <div class="image-container">
       <img [ngSrc]="imageUrl" width="280" height="160" alt="Game preview" />
@@ -8,12 +8,6 @@
       <div class="meta">
         <span class="timestamp">Added: {{ timeAgo }}</span>
         <span class="news-category news-category-freebies">{{ category }}</span>
-
-        <!-- <div class="platforms">
-          <span class="platform" *ngFor="let platform of platforms">
-            <img [src]="platform" alt="plt">
-          </span>
-        </div> -->
       </div>
 
       <h2 class="title">{{ title }}</h2>
@@ -22,6 +16,63 @@
       <div class="read-more">
         <p>Read more</p>
         <img src="../../../assets/svg/chevron-right.svg" alt="" />
+      </div>
+    </div>
+  </div>
+  <div class="absolute top-1 right-1 z-10">
+    <button
+      id="dropdownMenuIconHorizontalButton"
+      (click)="openNewsDropdown()"
+      data-dropdown-toggle="dropdownDotsHorizontal"
+      class="hover:-rotate-90 hover:bg-gray-800 transition-all inline-flex items-center p-2 text-sm font-medium text-center bg-[#1a1a1a] text-gray-900 rounded-lg focus:outline-none dark:text-white"
+      type="button"
+    >
+      <svg
+        class="w-5 h-5"
+        aria-hidden="true"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="#97ff10"
+        viewBox="0 0 16 3"
+      >
+        <path
+          d="M2 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm6.041 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM14 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z"
+        />
+      </svg>
+    </button>
+
+    <!-- news edit-visibility menu -->
+    <div
+      id="dropdownDotsHorizontal"
+      *ngIf="newsCardDropdown"
+      class="z-30 absolute right-1 bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600"
+    >
+      <ul
+        class="py-2 text-sm text-gray-700 dark:text-gray-200"
+        aria-labelledby="dropdownMenuIconHorizontalButton"
+      >
+        <li>
+          <div
+            class="flex p-2 rounded hover:bg-gray-100 dark:hover:bg-gray-600"
+          >
+            <label class="inline-flex items-center w-full cursor-pointer">
+              <input type="checkbox" value="" class="sr-only peer" />
+              <div
+                class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-600 peer-checked:after:translate-x-full rtl:peer-checked:after:translate-x-[-100%] peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-500 peer-checked:bg-blue-600"
+              ></div>
+              <span
+                class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300"
+                >Private</span
+              >
+            </label>
+          </div>
+        </li>
+      </ul>
+      <div class="py-2">
+        <a
+          href="#"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+          >Edit</a
+        >
       </div>
     </div>
   </div>
