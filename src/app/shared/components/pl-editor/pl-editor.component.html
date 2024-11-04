@@ -1,1 +1,1 @@
-<editor name="editor" [init]="editorConfig" [(ngModel)]="content" [ngModelOptions]="{standalone: true}"></editor>
+<editor name="editor" [init]="editorConfig" [(ngModel)]="content" (ngModelChange)="onContentChange($event)" [ngModelOptions]="{standalone: true}"></editor>

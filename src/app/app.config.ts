@@ -18,6 +18,6 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     { provide: MatSnackBarModule },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' }
+    { provide: TINYMCE_SCRIPT_SRC, useValue: 'tinymce/tinymce.min.js' },
   ],
 };

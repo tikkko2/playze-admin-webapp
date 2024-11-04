@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { EditorComponent, EditorModule } from '@tinymce/tinymce-angular';
 import { editable } from '../../models/editor-config';
-import { FormsModule } from '@angular/forms';
+import { ControlValueAccessor, FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-pl-editor',
@@ -12,5 +12,11 @@ import { FormsModule } from '@angular/forms';
 })
 export class PlEditorComponent {
   editorConfig = editable;
-  content!: string;
+  @Input() content: string = '';
+  @Output() contentChange = new EventEmitter<string>();
+
+  onContentChange(content: string) {
+    this.content = content;
+    this.contentChange.emit(this.content);
+  }
 }

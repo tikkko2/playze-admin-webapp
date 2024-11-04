@@ -28,11 +28,12 @@ export class AddNewsAnnComponent {
   private searchSubject = new Subject<string>();
   filterText: string = '';
   selectedImage: string | null = null;
+  imageFile: any;
   isPublic: boolean = false;
   toggle: boolean = false;
   games: KeyValuePairModel[] = [];
   selectedGames: KeyValuePairModel[] = [];
-
+  editorContent: string = '';
   ngOnInit() {
     this.initTypes();
     this.initForm();
@@ -50,7 +51,27 @@ export class AddNewsAnnComponent {
     });
   }
 
-  submitNews() {}
+  submitNews() {
+    if (this.newsForm.valid) {
+      const formData = new FormData();
+
+      formData.append('typeId', this.newsForm.get('typeId')?.value);
+      formData.append('headline', this.newsForm.get('headline')?.value);
+      formData.append(
+        'primaryKeyword',
+        this.newsForm.get('primaryKeyword')?.value
+      );
+      formData.append('contentHtml', this.newsForm.get('contentHtml')?.value);
+      formData.append('isPublic', String(this.isPublic));
+      formData.append('file', this.imageFile);
+      // formData.append('relatedGames', this.selectedGames.map(game => game.id));
+    }
+  }
+
+  onEditorContentChange(content: string) {
+    this.editorContent = content;
+    this.newsForm.get('contentHtml')?.setValue(content);
+  }
 
   addGames(game: KeyValuePairModel) {
     var existingGames = this.selectedGames.find((x) => game.id === x.id);
@@ -91,9 +112,8 @@ export class AddNewsAnnComponent {
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
-    console.log(file);
     if (file && file.type.startsWith('image/')) {
-      // Create a URL for the image preview
+      this.imageFile = file;
       const reader = new FileReader();
       reader.onload = (e: any) => {
         this.selectedImage = e.target.result;

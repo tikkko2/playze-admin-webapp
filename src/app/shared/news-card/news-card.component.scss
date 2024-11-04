@@ -188,24 +188,6 @@ $dark-bg: #121212;
   }
 }
 
-// News Category Styles
-.news-category {
-  color: $text-color;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  font-size: 0.875rem;
-
-  &-bundles {
-    background: rgba(71, 154, 251, 0.2);
-    border: 1px solid #479AFB;
-  }
-
-  &-freebies {
-    background: rgba(162, 71, 251, 0.2);
-    border: 1px solid #A247FB;
-  }
-}
-
 // Media Queries
 @media (max-width: 768px) {
   .card-content {
