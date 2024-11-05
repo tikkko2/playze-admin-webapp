@@ -41,7 +41,6 @@ $dark-bg: #121212;
   margin-bottom: 1.25rem;
   background-color: $primary-bg;
   color: $text-color;
-  cursor: pointer;
   border: 1px solid $border-color;
   transition: border-color 0.2s;
 
@@ -175,7 +174,7 @@ $dark-bg: #121212;
   gap: 0.5rem;
   margin-right: 0.25rem;
   margin-top: auto;
-
+  cursor: pointer;
   p {
     margin: 0;
     padding: 0;
@@ -184,6 +183,7 @@ $dark-bg: #121212;
 
     &:hover {
       color: lighten($hover-border-color, 10%);
+      text-decoration: underline;
     }
   }
 }

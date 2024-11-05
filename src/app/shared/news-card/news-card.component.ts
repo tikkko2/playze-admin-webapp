@@ -1,5 +1,5 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
-import { Component, inject, Input } from '@angular/core';
+import { Component, EventEmitter, inject, Input, Output } from '@angular/core';
 import { AnnouncementTypeModel } from '../models/announcement-type.model';
 import { Router } from '@angular/router';
 import { AnnouncementService } from '../../pages/announcement/announcement.service';
@@ -25,18 +25,20 @@ export class NewsCardComponent {
   @Input() platforms: string[] = [];
   @Input() published: boolean = false;
   @Input() publishTime: string = '';
+  @Output() deleted = new EventEmitter<string>();
 
   openNewsDropdown() {
     this.newsCardDropdown = !this.newsCardDropdown;
   }
 
-  goToNewsDetail(id: number) {
+  goToNewsDetail(id: any) {
     this._router.navigate(['/dashboard/announcement', id]);
   }
 
   remove() {
     this._announcementService.delete(this.id).subscribe((result) => {
       this.openNewsDropdown();
+      this.deleted.emit(this.id);
     });
   }
 }
