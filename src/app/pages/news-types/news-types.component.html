@@ -83,7 +83,16 @@
             scope="row"
             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
           >
-            {{ type.name }}
+            <span
+              class="news-category"
+              [style]="
+                'background:' +
+                type.color +
+                '33; border: 1px solid ' +
+                type.color
+              "
+              >{{ type.name }}</span
+            >
           </th>
           <td class="px-6 py-4">
             <span (click)="openEditDialog(type)" class="cursor-pointer">

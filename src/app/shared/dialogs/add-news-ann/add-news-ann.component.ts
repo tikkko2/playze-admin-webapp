@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { NewsTypesService } from '../../../pages/news-types/news-types.service';
-import { Subject } from 'rxjs';
 import { KeyValuePairModel } from '../../models/key-value-pair.model';
 import {
   FormBuilder,
@@ -12,6 +11,8 @@ import {
 } from '@angular/forms';
 import { PlEditorComponent } from '../../components/pl-editor/pl-editor.component';
 import { AnnouncementService } from '../../../pages/announcement/announcement.service';
+import { AnnouncementTypeModel } from '../../models/announcement-type.model';
+import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-add-news-ann',
@@ -24,8 +25,12 @@ export class AddNewsAnnComponent {
   public newsTypesService = inject(NewsTypesService);
   public announcementService = inject(AnnouncementService);
   private _builder = inject(FormBuilder);
+
+  constructor(public _dialog: MatDialogRef<AddNewsAnnComponent>) {}
+
   newsForm!: FormGroup;
-  private searchSubject = new Subject<string>();
+
+  isLoading: boolean = false;
   filterText: string = '';
   selectedImage: string | null = null;
   imageFile: any;
@@ -34,6 +39,7 @@ export class AddNewsAnnComponent {
   games: KeyValuePairModel[] = [];
   selectedGames: KeyValuePairModel[] = [];
   editorContent: string = '';
+
   ngOnInit() {
     this.initTypes();
     this.initForm();
@@ -45,14 +51,16 @@ export class AddNewsAnnComponent {
       headline: ['', [Validators.required, Validators.maxLength(300)]],
       primaryKeyword: ['', [Validators.required, Validators.maxLength(200)]],
       typeId: ['', [Validators.required]],
-      relatedGames: ['', [Validators.required]],
       contentHtml: ['', [Validators.required]],
       file: ['', [Validators.required]],
     });
   }
 
   submitNews() {
+    if (this.isLoading) return;
     if (this.newsForm.valid) {
+      this.isLoading = true;
+
       const formData = new FormData();
 
       formData.append('typeId', this.newsForm.get('typeId')?.value);
@@ -64,7 +72,21 @@ export class AddNewsAnnComponent {
       formData.append('contentHtml', this.newsForm.get('contentHtml')?.value);
       formData.append('isPublic', String(this.isPublic));
       formData.append('file', this.imageFile);
-      // formData.append('relatedGames', this.selectedGames.map(game => game.id));
+
+      this.selectedGames.forEach((gameId) => {
+        formData.append('relatedGames[]', gameId.id);
+      });
+
+      this.announcementService.uploadNews(formData).subscribe(
+        (result) => {
+          this.isLoading = false;
+
+          this._dialog.close(true);
+        },
+        (error) => {
+          this.isLoading = false;
+        }
+      );
     }
   }
 
@@ -91,7 +113,7 @@ export class AddNewsAnnComponent {
 
   initTypes() {
     this.newsTypesService.getNewsTypes(this.filterText).subscribe((result) => {
-      const types = result.parameters[result.key] as KeyValuePairModel[];
+      const types = result.parameters[result.key] as AnnouncementTypeModel[];
       this.newsTypesService.newsTypes.set(types);
     });
   }

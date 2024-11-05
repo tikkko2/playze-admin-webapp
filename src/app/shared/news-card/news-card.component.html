@@ -7,13 +7,26 @@
     <div class="content">
       <div class="meta">
         <span class="timestamp">Added: {{ timeAgo }}</span>
-        <span class="news-category news-category-freebies">{{ category }}</span>
+
+        <span class="timestamp" *ngIf="published"
+          >Published: {{ published }} | {{ publishTime }}</span
+        >
+        <span
+          class="news-category"
+          [style]="
+            'background:' +
+            category.color +
+            '33; border: 1px solid ' +
+            category.color
+          "
+          >{{ category.name }}</span
+        >
       </div>
 
       <h2 class="title">{{ title }}</h2>
       <p class="subtitle">{{ subtitle }}</p>
 
-      <div class="read-more">
+      <div class="read-more" (click)="goToNewsDetail(1)">
         <p>Read more</p>
         <img src="../../../assets/svg/chevron-right.svg" alt="" />
       </div>
@@ -73,6 +86,15 @@
           class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
           >Edit</a
         >
+      </div>
+
+      <div class="py-2">
+        <button
+          (click)="remove()"
+          class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+        >
+          Delete
+        </button>
       </div>
     </div>
   </div>

@@ -1,12 +1,13 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { NewsTypesService } from './news-types.service';
 import { CommonModule } from '@angular/common';
-import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { KeyValuePairModel } from '../../shared/models/key-value-pair.model';
 import { NewsTypesDialogComponent } from '../../shared/dialogs/news-types-dialog/news-types-dialog.component';
 import { DeleteNewsTypeComponent } from '../../shared/dialogs/delete-news-type/delete-news-type.component';
-import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { FormsModule } from '@angular/forms';
+import { AnnouncementTypeModel } from '../../shared/models/announcement-type.model';
 
 @Component({
   selector: 'app-news-types',
@@ -21,55 +22,40 @@ export class NewsTypesComponent implements OnInit {
   filterText: string = '';
   private searchSubject = new Subject<string>();
 
-
   ngOnInit() {
-    this.initTypes();
-    this.setupSearch();
-  }
-
-  private setupSearch() {
-    this.searchSubject.pipe().subscribe(searchTerm => {
-      this.filterText = searchTerm;
-      this.initTypes();
-    });
     this.initTypes();
   }
 
   onSearchChange(event: Event) {
-    const searchTerm = (event.target as HTMLInputElement).value;
-    this.searchSubject.next(searchTerm);
+    this.initTypes();
   }
 
   initTypes() {
     this.newsTypesService.getNewsTypes(this.filterText).subscribe((result) => {
-      const types = result.parameters[result.key] as KeyValuePairModel[];
+      const types = result.parameters[result.key] as AnnouncementTypeModel[];
       this.newsTypesService.newsTypes.set(types);
     });
   }
 
-  openEditDialog(type: KeyValuePairModel | null) {
-    const dialog = this._dialog.open(NewsTypesDialogComponent, {data: type});
-    dialog.afterClosed().subscribe(
-      (result) => {
-        if (result) {
-          this.initTypes();
-        }
+  openEditDialog(type: AnnouncementTypeModel | null) {
+    const dialog = this._dialog.open(NewsTypesDialogComponent, { data: type });
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.initTypes();
       }
-    )
+    });
   }
 
   openDeleteTypeDialog(type: KeyValuePairModel) {
-    const dialog = this._dialog.open(DeleteNewsTypeComponent, {data: type.name});
-    dialog.afterClosed().subscribe(
-      (result) => {
-        if (result) {
-          this.newsTypesService.deleteNewsType(type.id).subscribe(
-            () => {
-              this.initTypes();
-            }
-          );
-        }
+    const dialog = this._dialog.open(DeleteNewsTypeComponent, {
+      data: type.name,
+    });
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.newsTypesService.deleteNewsType(type.id).subscribe(() => {
+          this.initTypes();
+        });
       }
-    )
+    });
   }
 }

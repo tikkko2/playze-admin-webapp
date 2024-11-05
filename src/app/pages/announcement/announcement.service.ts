@@ -10,10 +10,22 @@ export class AnnouncementService {
   private _gamesQuantity: number = 50;
 
   getGames(name: string) {
-    return this._httpService.get(`/games/dropdown?Ammount=${this._gamesQuantity}&Name=${name}`);
+    return this._httpService.get(
+      `/games/dropdown?Ammount=${this._gamesQuantity}&Name=${name}`
+    );
   }
 
   uploadNews(data: any) {
     return this._httpService.post(`/announcements`, data);
+  }
+
+  getNews(headline: string, pageNumber: number, pageSize: number) {
+    return this._httpService.get(
+      `/announcements?PageNumber=${pageNumber}&PageSize=${pageSize}&Headline=${headline}`
+    );
+  }
+
+  delete(id: string) {
+    return this._httpService.delete(`/announcements/${id}`);
   }
 }

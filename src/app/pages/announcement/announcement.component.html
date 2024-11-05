@@ -24,7 +24,9 @@
         type="text"
         id="type-search"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white focus:outline-none"
-        placeholder="Search type"
+        placeholder="Search..."
+        [(ngModel)]="filterText"
+        (input)="loadNews()"
         required
       />
     </div>
@@ -61,23 +63,29 @@
     </div>
   </div>
   <div class="max-w-[1000px] mx-auto">
-    <app-news-card
-      imageUrl="https://imageio.forbes.com/specials-images/imageserve/65166fdaa6a52a71706371d4/Game-On--The-Top-10-Video-Game-Trends-In-2024/960x0.jpg?height=399&width=711&fit=bounds"
-      title="Free games to play this weekend (23-24 March) - a comprehensive round-up Humble the best of boomer shooters Game bundle is here!"
-      subtitle="Humble the best of boomer shooters Game bundle is here!"
-      timeAgo="4h ago"
-      category="Bundles"
-      [platforms]="[
-        '../../../assets/svg/fa_windows.svg',
-        '../../../assets/svg/fa-brands_playstation.svg'
-      ]"
-      (click)="goToNewsDetail(1)"
-    >
-    </app-news-card>
+    <div *ngFor="let item of news">
+      <app-news-card
+        [id]="item.id"
+        [imageUrl]="imageDomain + item.image"
+        [title]="item.headline"
+        [subtitle]="item.primaryKeyword"
+        [timeAgo]="item.createTime"
+        [category]="item.type"
+        [platforms]="[
+          '../../../assets/svg/fa_windows.svg',
+          '../../../assets/svg/fa-brands_playstation.svg'
+        ]"
+        [published]="item.isPublished"
+        [publishTime]="item.publishedTime"
+      >
+      </app-news-card>
+    </div>
     <app-pagination
       (pageChange)="onPageChange($event)"
-      [currentPage]="currentPage"
+      [currentPage]="pageNumber"
       [totalPages]="totalPages"
+      [hasNext]="hasNext"
+      [hasPrevious]="hasPrev"
     ></app-pagination>
   </div>
 </div>

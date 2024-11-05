@@ -1,17 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import 'custom-theme.scss';
-@import url('https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap');
+@import "custom-theme.scss";
+@import url("https://fonts.googleapis.com/css2?family=Jura:wght@300..700&display=swap");
 
 * {
   font-family: "Jura", sans-serif !important;
   box-sizing: border-box;
 }
 
-body, html {
+body,
+html {
   font-optical-sizing: auto;
-  background-image: url('./assets/img/homePage.svg');
+  background-image: url("./assets/img/homePage.svg");
 }
 
 .mat-mdc-dialog-surface.mdc-dialog__surface {
@@ -24,7 +25,7 @@ body, html {
 
 /* For WebKit-based browsers (Chrome, Safari, Edge) */
 ::-webkit-scrollbar {
-  width: 6px;  /* Adjust for thinness */
+  width: 6px; /* Adjust for thinness */
 }
 
 ::-webkit-scrollbar-track {
@@ -34,20 +35,19 @@ body, html {
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #C9FF58; /* Blue color for the thumb */
-  border-radius: 10px;       /* Rounded corners */
+  background-color: #c9ff58; /* Blue color for the thumb */
+  border-radius: 10px; /* Rounded corners */
   border: 2px solid transparent; /* Padding around the thumb */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #C9FF58; /* Darker blue on hover */
+  background-color: #c9ff58; /* Darker blue on hover */
 }
 
 /* For Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: rgba(#C9FF58, 0.8) #1a1a1a;
-
+  scrollbar-color: rgba(#c9ff58, 0.8) #1a1a1a;
 }
 
 .dash-component {
@@ -64,11 +64,11 @@ body, html {
 
   &-bundles {
     background: rgba(71, 154, 251, 0.2);
-    border: 1px solid #479AFB;
+    border: 1px solid #479afb;
   }
 
   &-freebies {
     background: rgba(162, 71, 251, 0.2);
-    border: 1px solid #A247FB;
+    border: 1px solid #a247fb;
   }
 }

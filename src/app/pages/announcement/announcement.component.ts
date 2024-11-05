@@ -1,36 +1,71 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PaginationComponent } from '../../shared/pagination/pagination.component';
 import { NewsCardComponent } from '../../shared/news-card/news-card.component';
 import { MatDialog } from '@angular/material/dialog';
 import { AddNewsAnnComponent } from '../../shared/dialogs/add-news-ann/add-news-ann.component';
 import { Router } from '@angular/router';
+import { AnnouncementService } from './announcement.service';
+import { AnnouncementItemModel } from '../../shared/models/announcement-item.model';
+import { PagedListModel } from '../../shared/models/paged-list.model';
+import { CommonModule } from '@angular/common';
+import { environment } from '../../../environments/environment';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-announcement',
   standalone: true,
-  imports: [PaginationComponent, NewsCardComponent],
+  imports: [PaginationComponent, NewsCardComponent, CommonModule, FormsModule],
   templateUrl: './announcement.component.html',
   styleUrl: './announcement.component.scss',
 })
-export class AnnouncementComponent {
-  totalPages = 10;
-  currentPage = 1;
+export class AnnouncementComponent implements OnInit {
+  pageSize = 5;
+  pageNumber = 1;
+  totalPages = 0;
+  filterText = '';
+  pagedList: PagedListModel<AnnouncementItemModel> | null = null;
+  news: AnnouncementItemModel[] = [];
+  imageDomain = environment.bucket;
+  hasNext: boolean = false;
+  hasPrev: boolean = false;
 
   constructor(
     private _dialog: MatDialog,
-    private _router: Router,
+    private _announcementService: AnnouncementService
   ) {}
 
+  ngOnInit(): void {
+    this.loadNews();
+  }
+
+  loadNews() {
+    this._announcementService
+      .getNews(this.filterText, this.pageNumber, this.pageSize)
+      .subscribe((result: any) => {
+        this.pagedList = result.parameters[
+          result.key
+        ] as PagedListModel<AnnouncementItemModel>;
+
+        this.totalPages = this.pagedList.totalPages;
+        this.news = this.pagedList.results;
+
+        this.hasNext = this.pagedList.hasNext;
+        this.hasPrev = this.pagedList.hasPrevious;
+      });
+  }
+
   onPageChange(newPage: number) {
-    this.currentPage = newPage;
-    // this.loadGames(this.currentPage, this.currentFilters, this.orderBy, this.searchValue);
+    this.pageNumber = newPage;
+    this.loadNews();
   }
 
   addNewsDialog() {
-    this._dialog.open(AddNewsAnnComponent);
-  }
+    const dialog = this._dialog.open(AddNewsAnnComponent);
 
-  goToNewsDetail(id: number) {
-    this._router.navigate(['/dashboard/announcement', id]);  // Navigate to the detail page with the ID
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadNews();
+      }
+    });
   }
 }

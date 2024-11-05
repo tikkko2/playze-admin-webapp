@@ -8,16 +8,16 @@ $dark-bg: #121212;
 
 // Mixins
 @mixin corner-cut($size, $color, $position) {
-  content: '';
+  content: "";
   position: absolute;
   width: 1px;
 
-  @if $position == 'top-left' {
+  @if $position == "top-left" {
     top: -2px;
     left: -2px;
     border-top: $size solid $color;
     border-right: $size solid transparent;
-  } @else if $position == 'bottom-right' {
+  } @else if $position == "bottom-right" {
     bottom: -2px;
     right: -2px;
     border-bottom: $size solid $color;
@@ -26,7 +26,7 @@ $dark-bg: #121212;
 }
 
 @mixin diagonal-line {
-  content: '';
+  content: "";
   position: absolute;
   height: 1px;
   width: 39px;
@@ -57,11 +57,11 @@ $dark-bg: #121212;
   }
 
   &::before {
-    @include corner-cut(30px, $dark-bg, 'bottom-right');
+    @include corner-cut(30px, $dark-bg, "bottom-right");
   }
 
   &::after {
-    @include corner-cut(30px, $dark-bg, 'top-left');
+    @include corner-cut(30px, $dark-bg, "top-left");
   }
 }
 
@@ -101,7 +101,7 @@ $dark-bg: #121212;
   }
 
   &::before {
-    content: '';
+    content: "";
     position: absolute;
     bottom: 0;
     right: 0;
@@ -111,7 +111,7 @@ $dark-bg: #121212;
   }
 
   &::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;

@@ -42,6 +42,7 @@
         formControlName="typeId"
         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:outline-none block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
       >
+        <option value="">Select News Type</option>
         <option
           *ngFor="let type of this.newsTypesService.newsTypes()"
           [value]="type.id"
@@ -159,8 +160,12 @@
         class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
         >Content</label
       >
-      <app-pl-editor ngDefaultControl formControlName="contentHtml" [content]="editorContent"
-      (contentChange)="onEditorContentChange($event)"></app-pl-editor>
+      <app-pl-editor
+        ngDefaultControl
+        formControlName="contentHtml"
+        [content]="editorContent"
+        (contentChange)="onEditorContentChange($event)"
+      ></app-pl-editor>
     </div>
 
     <div>
