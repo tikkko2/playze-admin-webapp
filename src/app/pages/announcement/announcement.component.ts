@@ -55,7 +55,7 @@ export class AnnouncementComponent implements OnInit {
   }
 
   onNewsDeleted(newsId: string) {
-    this.news = this.news.filter(news => news.id !== newsId);
+    this.loadNews();
   }
 
   onPageChange(newPage: number) {

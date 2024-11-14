@@ -28,4 +28,8 @@ export class AnnouncementService {
   delete(id: string) {
     return this._httpService.delete(`/announcements/${id}`);
   }
+
+  changeVisibility(id: string) {
+    return this._httpService.patch(`/announcements/${id}`, null);
+  }
 }
