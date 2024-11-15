@@ -6,11 +6,12 @@ import { AnnouncementService } from '../../pages/announcement/announcement.servi
 import { FormsModule } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { DeleteNewsTypeComponent } from '../dialogs/delete-news-type/delete-news-type.component';
+import { AddNewsAnnComponent } from '../dialogs/add-news-ann/add-news-ann.component';
 
 @Component({
   selector: 'app-news-card',
   standalone: true,
-  imports: [CommonModule, NgOptimizedImage, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './news-card.component.html',
   styleUrl: './news-card.component.scss',
 })
@@ -30,6 +31,7 @@ export class NewsCardComponent {
   @Input() published: boolean = false;
   @Input() publishTime: string = '';
   @Output() deleted = new EventEmitter<string>();
+  @Output() edited = new EventEmitter<string>();
 
   openNewsDropdown() {
     this.newsCardDropdown = !this.newsCardDropdown;
@@ -37,6 +39,24 @@ export class NewsCardComponent {
 
   goToNewsDetail(id: any) {
     this._router.navigate(['/dashboard/announcement', id]);
+  }
+
+  edit() {
+    const dialog = this._dialog.open(AddNewsAnnComponent, {
+      data: {
+        title: this.title,
+        subtitle: this.subtitle,
+        category: this.category,
+        imageUrl: this.imageUrl,
+        contentHtml: '',
+        relatedGames: [],
+      },
+    });
+
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+      }
+    });
   }
 
   remove() {

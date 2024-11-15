@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, Inject, inject, OnInit } from '@angular/core';
 import { NewsTypesService } from '../../../pages/news-types/news-types.service';
 import { KeyValuePairModel } from '../../models/key-value-pair.model';
 import {
@@ -12,7 +12,8 @@ import {
 import { PlEditorComponent } from '../../components/pl-editor/pl-editor.component';
 import { AnnouncementService } from '../../../pages/announcement/announcement.service';
 import { AnnouncementTypeModel } from '../../models/announcement-type.model';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { AnnouncementItemModel } from '../../models/announcement-item.model';
 
 @Component({
   selector: 'app-add-news-ann',
@@ -21,12 +22,36 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './add-news-ann.component.html',
   styleUrl: './add-news-ann.component.scss',
 })
-export class AddNewsAnnComponent {
+export class AddNewsAnnComponent implements OnInit {
   public newsTypesService = inject(NewsTypesService);
   public announcementService = inject(AnnouncementService);
   private _builder = inject(FormBuilder);
 
-  constructor(public _dialog: MatDialogRef<AddNewsAnnComponent>) {}
+  title: string = '';
+  subtitle: string = '';
+  category!: AnnouncementTypeModel;
+
+  constructor(
+    public _dialog: MatDialogRef<AddNewsAnnComponent>,
+    @Inject(MAT_DIALOG_DATA)
+    public data: {
+      title: string;
+      subtitle: string;
+      category: AnnouncementTypeModel;
+      contentHtml?: string;
+      relatedGames?: KeyValuePairModel[];
+      imageUrl?: string;
+    }
+  ) {
+    if (data) {
+      this.title = data.title;
+      this.subtitle = data.subtitle;
+      this.category = data.category;
+      this.selectedGames = data.relatedGames ?? [];
+      this.selectedImage = data.imageUrl ?? null;
+      this.editorContent = data.contentHtml ?? '';
+    }
+  }
 
   newsForm!: FormGroup;
 
@@ -48,10 +73,13 @@ export class AddNewsAnnComponent {
 
   initForm() {
     this.newsForm = this._builder.group({
-      headline: ['', [Validators.required, Validators.maxLength(300)]],
-      primaryKeyword: ['', [Validators.required, Validators.maxLength(200)]],
-      typeId: ['', [Validators.required]],
-      contentHtml: ['', [Validators.required]],
+      headline: [this.title, [Validators.required, Validators.maxLength(300)]],
+      primaryKeyword: [
+        this.subtitle,
+        [Validators.required, Validators.maxLength(200)],
+      ],
+      typeId: [this.category ? this.category.id : '', [Validators.required]],
+      contentHtml: [this.editorContent, [Validators.required]],
       file: ['', [Validators.required]],
     });
   }

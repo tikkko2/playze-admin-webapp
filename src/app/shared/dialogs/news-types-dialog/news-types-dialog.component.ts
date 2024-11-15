@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { KeyValuePairModel } from '../../models/key-value-pair.model';
 import { NewsTypesService } from '../../../pages/news-types/news-types.service';
 import { AnnouncementTypeModel } from '../../models/announcement-type.model';
 
