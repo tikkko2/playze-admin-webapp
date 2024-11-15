@@ -54,6 +54,19 @@ export class AnnouncementComponent implements OnInit {
       });
   }
 
+  openEditDialog(type: AnnouncementItemModel | null) {
+    const dialog = this._dialog.open(AddNewsAnnComponent, { data: type });
+    dialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.loadNews();
+      }
+    });
+  }
+
+  onNewsEdit(newsId: string) {
+    this.loadNews();
+  }
+
   onNewsDeleted(newsId: string) {
     this.loadNews();
   }

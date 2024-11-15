@@ -1,7 +1,7 @@
 <div class="news-card relative">
   <div class="card-content">
     <div class="image-container">
-      <img [ngSrc]="imageUrl" width="280" height="160" alt="Game preview" />
+      <img [src]="imageUrl" width="280" height="160" alt="Game preview" />
     </div>
 
     <div class="content">
@@ -49,7 +49,7 @@
           >{{ published ? "Published" : "Private" }}</span
         >
       </label>
-      <span class="cursor-pointer">
+      <span class="cursor-pointer" (click)="edit()">
         <img src="../../../assets/svg/edit.svg" alt="edit" />
       </span>
       <span class="cursor-pointer" (click)="remove()">
