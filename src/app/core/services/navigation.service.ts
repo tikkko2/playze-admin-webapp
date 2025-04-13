@@ -45,6 +45,13 @@ export class NavigationService {
         },
       ],
     },
+    {
+      icon: 'image-slider',
+      name: 'Slider',
+      navigate: '/dashboard/slider',
+      selected: false,
+      children: [],
+    },
   ]);
 
   public readonly navigation = this._navigation.asReadonly();

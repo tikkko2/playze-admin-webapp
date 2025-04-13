@@ -1,0 +1,185 @@
+<div class="bg-[#121212] dash-component p-8 border border-[#caff5881] rounded">
+  <div class="p-5 max-w-3xl mx-auto">
+    <form [formGroup]="uploadForm">
+      <!-- Upload Button Area -->
+      <div
+        class="flex items-center mb-5 border-2 border-dashed border-[#caff5881] rounded-lg"
+      >
+        <button
+          type="button"
+          class="w-full p-12 text-center mx-auto transition-all ease-in-out hover:bg-[#ade03f2c] text-white font-medium rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+          (click)="fileInput.click()"
+          [disabled]="isUploading"
+        >
+          <img
+            src="assets/icons/photo-upload.svg"
+            alt="Upload"
+            class="flex-shrink-0 w-12 mx-auto transition duration-75"
+          />
+          <p class="mt-2">Click to upload images</p>
+          <p class="text-sm text-gray-300">PNG, JPG, GIF (max. 5MB)</p>
+        </button>
+        <input
+          #fileInput
+          type="file"
+          class="hidden"
+          accept="image/png, image/jpeg, image/gif, image/jpg, image/webp, image/svg+xml"
+          multiple
+          (change)="onFileSelect($event)"
+          formControlName="imageFiles"
+        />
+      </div>
+
+      <!-- Images Being Uploaded -->
+      <div class="mb-5" *ngIf="images.length > 0">
+        <h3 class="mb-4 text-gray-300">Images to Upload (Drag to reorder)</h3>
+        <div
+          cdkDropList
+          class="image-list"
+          (cdkDropListDropped)="drop($event)"
+        >
+          <div
+            class="image-box"
+            *ngFor="let image of images; let i = index"
+            cdkDrag
+          >
+            <!-- Image Preview -->
+            <div class="image-preview">
+              <img
+                [src]="image.url"
+                [alt]="'Preview ' + (i + 1)"
+                class="preview-img"
+              />
+            </div>
+            
+            <!-- Controls Section -->
+            <div class="image-controls">
+              <!-- Redirect URL Input -->
+              <div class="mb-2">
+                <input
+                  type="text"
+                  class="redirect-input"
+                  placeholder="Redirect URL"
+                  [(ngModel)]="image.redirectUrl"
+                  [ngModelOptions]="{standalone: true}"
+                />
+              </div>
+              
+              <!-- Toggle and Actions Row -->
+              <div class="flex justify-between items-center">
+                <!-- Public/Private Toggle -->
+                <div class="flex items-center">
+                  <label class="toggle-switch">
+                    <input
+                      type="checkbox"
+                      class="sr-only peer"
+                      [(ngModel)]="image.isPublic"
+                      [ngModelOptions]="{standalone: true}"
+                    />
+                    <div class="toggle-track"></div>
+                    <span class="toggle-label">{{ image.isPublic ? 'Public' : 'Private' }}</span>
+                  </label>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="flex">
+                  <!-- Delete Button -->
+                  <button
+                    class="delete-btn"
+                    (click)="deleteImage(i)"
+                    [disabled]="isUploading"
+                    matTooltip="Delete image"
+                  >
+                    <img
+                      src="assets/icons/delete-icon.svg"
+                      alt="Delete"
+                      class="w-4 h-4"
+                    />
+                  </button>
+                  
+                  <!-- Drag Handle -->
+                  <div
+                    cdkDragHandle
+                    matTooltip="Drag to reorder"
+                    class="drag-handle"
+                  >
+                    <img
+                      src="assets/icons/drag.svg"
+                      alt="Drag"
+                      class="w-4 h-4"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Custom Drag Preview -->
+            <div *cdkDragPreview class="drag-preview">
+              <img [src]="image.url" [alt]="'Preview ' + (i + 1)">
+            </div>
+          </div>
+        </div>
+
+        <!-- Upload Button -->
+        <div class="mt-4 text-center">
+          <button
+            class="px-4 py-2 bg-[#caff58] text-black rounded-md hover:bg-[#ade03f] disabled:opacity-50 disabled:cursor-not-allowed"
+            (click)="uploadImages()"
+            [disabled]="isUploading"
+          >
+            {{ isUploading ? 'Uploading...' : 'Upload Images' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Uploaded Images -->
+      <div class="mb-5" *ngIf="uploadedImages.length > 0">
+        <h3 class="mb-4 text-gray-300">Uploaded Images</h3>
+        <div class="image-list">
+          <div
+            class="image-box"
+            *ngFor="let image of uploadedImages"
+          >
+            <div class="image-preview">
+              <img
+                [src]="image.url"
+                [alt]="'Uploaded ' + image.id"
+                class="preview-img"
+              />
+            </div>
+            <div class="image-controls">
+              <div class="mb-2">
+                <input
+                  type="text"
+                  class="redirect-input"
+                  placeholder="Redirect URL"
+                  [value]="image.redirectUrl"
+                  disabled
+                />
+              </div>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                  <span class="text-sm text-gray-600">
+                    {{ image.isPublic ? 'Public' : 'Private' }}
+                  </span>
+                </div>
+                <button
+                  class="delete-btn"
+                  (click)="deleteImage(uploadedImages.indexOf(image))"
+                  [disabled]="isUploading"
+                  matTooltip="Delete image"
+                >
+                  <img
+                    src="assets/icons/delete-icon.svg"
+                    alt="Delete"
+                    class="w-4 h-4"
+                  />
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
