@@ -1,149 +1,43 @@
-.image-list {
-    width: 100%;
-    max-width: 100%;
-    min-height: 60px;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
-    background: #121212;
-    border-radius: 4px;
-    overflow: visible;
-    padding: 8px;
-  }
+.example-list {
+  max-width: 800px;
+  // border: solid 1px #caff5881;
+  min-height: 60px;
+  display: block;
+  overflow: hidden;
+  margin: auto;
+}
 
-  .image-box {
-    width: 180px;
-    border: solid 1px #ccc;
-    color: rgba(0, 0, 0, 0.87);
-    display: flex;
-    flex-direction: column;
-    box-sizing: border-box;
-    cursor: move;
-    background: white;
-    font-size: 14px;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
-  }
+.example-box {
+  border: solid 1px #caff5881;
+  border-radius: 12px;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  margin: 10px 0;
+  cursor: move;
+  font-size: 14px;
+}
 
-  .image-preview {
-    height: 96px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-  }
+.cdk-drag-preview {
+  border: none;
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
 
-  .preview-img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+.cdk-drag-placeholder {
+  opacity: 0;
+}
 
-  .image-controls {
-    padding: 8px;
-    border-top: 1px solid #f0f0f0;
-    background-color: #f9f9f9;
-  }
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
 
-  .redirect-input {
-    width: 100%;
-    padding: 4px 8px;
-    font-size: 12px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-  }
-
-  .toggle-switch {
-    display: inline-flex;
-    align-items: center;
-    cursor: pointer;
-  }
-
-  .toggle-track {
-    position: relative;
-    width: 32px;
-    height: 16px;
-    background-color: #ccc;
-    border-radius: 999px;
-    transition: all 0.3s;
-  }
-
-  .toggle-track:after {
-    content: '';
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 12px;
-    height: 12px;
-    background-color: white;
-    border-radius: 999px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-    transition: all 0.3s;
-  }
-
-  input:checked + .toggle-track {
-    background-color: #3b82f6;
-  }
-
-  input:checked + .toggle-track:after {
-    transform: translateX(16px);
-  }
-
-  .toggle-label {
-    margin-left: 8px;
-    font-size: 12px;
-    color: #666;
-  }
-
-  .delete-btn {
-    color: #ef4444;
-    margin-right: 8px;
-    transition: color 0.2s;
-  }
-
-  .delete-btn:hover {
-    color: #b91c1c;
-  }
-
-  .drag-handle {
-    cursor: move;
-    color: #666;
-  }
-
-  .cdk-drag-preview {
-    box-sizing: border-box;
-    border-radius: 4px;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                0 3px 14px 2px rgba(0, 0, 0, 0.12);
-  }
-
-  .cdk-drag-placeholder {
-    opacity: 0.3;
-    border: 2px dashed #999;
-  }
-
-  .cdk-drag-animating {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
-
-  .drag-preview {
-    width: 120px;
-    height: 120px;
-    border-radius: 4px;
-    overflow: hidden;
-    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
-                0 8px 10px 1px rgba(0, 0, 0, 0.14),
-                0 3px 14px 2px rgba(0, 0, 0, 0.12);
-  }
-
-  .drag-preview img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .image-list.cdk-drop-list-dragging .image-box:not(.cdk-drag-placeholder) {
-    transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
-  }
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
